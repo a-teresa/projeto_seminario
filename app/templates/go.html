@@ -1,0 +1,22 @@
+{% extends "master.html" %}
+{% block title %}Results{% endblock %}
+
+{% block message %}
+    <hr />
+    <h4 class="text-center">VARIABLES</h4>
+    <p class="text-center"><i>{{query}}</i></p>
+{% endblock %}
+
+{% block content %}
+    <h1 class="text-center">Result</h1>
+        <ul class="list-group">
+            {% for apartments, houses, areas_sqm, quartos, Latitude, Longitude in casas_result.items() %}
+                {% if apartments == 1 %}
+                    <li class="list-group-item list-group-item-success text-center">{{Price}}</li>
+                {% else %}
+                    <li class="list-group-item list-group-item-dark text-center">{{Price}}</li>
+                {% endif %}
+            {% endfor %}
+        </ul>
+        </div>
+    </div>
