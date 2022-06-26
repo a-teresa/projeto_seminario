@@ -1,0 +1,100 @@
+<!doctype html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">/head>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Predict Prices</title>
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous">
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap-theme.min.css" integrity="sha384-rHyoN1iRsVXV4nD0JutlnGaslCJuC7uwjduW9SVrLvRYooPp2bWYgmgJQIXwl/Sp" crossorigin="anonymous">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+    <script src="https://cdn.plot.ly/plotly-latest.min.js"></script>
+    
+</head>
+
+<body>
+<nav class="navbar navbar-inverse navbar-fixed-top">
+    <div class="container">
+         <div class="navbar-header">
+             <a class="navbar-brand" href="/">Predict House Prices</a>
+         </div>
+         <div id="navbar" class="collapse navbar-collapse">
+             <ul class="nav navbar-nav">
+                 <li><a href="https://www.ua.pt/">Aveiro University</a></li>
+                 <li><a href="https://github.com/a-teresa/projeto_seminario">Contact</a></li>
+             </ul>
+         </div>
+    </div>
+</nav>
+
+<br>
+<br>
+<br>
+<br>
+<div class="login">
+    <div class = "container">
+    <h1 class="text-center">Predict prices:</h1>
+        <h3 class="text-center">Enter the following values to predict the price:</h3>
+    <form action="{{url_for('predict')}}"method="post">
+     <div class="form-group">
+         <label for="formGroupExampleInput"><h3>Apartment:</h3></label>
+         <input type="text" class="form-control form-control-lg" name="apartments" placeholder="Please enter 1 if it's an apartment and 0 if it's not.">
+     </div>
+     <div class="form-group">
+         <label for="formGroupExampleInput"><h3>House:</h3></label>
+         <input type="text" class="form-control form-control-lg" name="houses" placeholder="Please enter 1 if it's a house and 0 if it's not.">
+     </div>
+      <div class="form-group>">
+         <label for="formGroupExampleInput"><h3>Total area:</h3></label>
+         <input type="text" class="form-control form-control-lg" name="areas_sqm" placeholder="Please enter the total area.">
+    </div>
+     <div class="form-group">
+         <label for="formGroupExampleInput"><h3>Number of rooms:</h3></label>
+         <input type="text" class="form-control form-control-lg" name="quartos" placeholder= "Please enter the number of rooms.">
+     </div>
+      <div class="form-group">
+        <label for="formGroupExampleInput"><h3>Postal Code:</h3></label>
+        <input type="text" class="form-control form-control-lg" name="CodPostal" placeholder="Please enter Postal Code.">
+      </div>
+      <div class="form-group">
+       <label for="formGroupExampleInput"><h3>Condition Code:</h3></label>
+       <input type="text" class="form-control form-control-lg" name="Cod_Condition" placeholder="0-Ruin, 1-To Recuperate, 2-Under Project, 3-Under Construction, 4-Used, 5-Renovated,6-New ">
+       </div>
+       <div class="container">
+      <div class="row">
+          <div class="col text-center">
+            <button type="submit" class = "btn btn-primary btn-lg">Predict Price </button>
+          </div>
+      </div>
+    </div>
+    </form>
+    <br>
+    <br>
+    <h1 class="text-center">{{prediction_text }}</h1>
+    </div>
+</div>
+
+
+
+<div class="container">
+    {% block content %}
+        <div class="page-header">
+            <h1 class="text-center"></h1>
+        </div>
+    {% endblock %}
+
+    {% for id in ids %}
+        <div id="{{id}}"></div>
+    {% endfor %}
+</div>
+
+<script type="text/javascript">
+    const graphs = {{graphJSON | safe}};
+    const ids = {{ids | safe}};
+    for(let i in graphs) {
+        Plotly.plot(ids[i], graphs[i].data, graphs[i].layout);
+    }
+</script>
+
+</body>
+</html>
